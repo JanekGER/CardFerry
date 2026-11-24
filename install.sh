@@ -1,5 +1,7 @@
+// Note: This installer script was generated with AI assistance.
+
 #!/usr/bin/env bash
-# Hekate installer for Raspberry Pi OS
+# CardFerry installer for Raspberry Pi OS
 # Usage: bash install.sh   (run as your normal user, NOT with sudo)
 set -euo pipefail
 
@@ -42,11 +44,11 @@ else
 fi
 
 echo
-read -r -p "Start Hekate automatically at boot? [y/N] " ANSWER
+read -r -p "Start CardFerry automatically at boot? [y/N] " ANSWER
 if [[ "$ANSWER" =~ ^[Yy]$ ]]; then
-    sudo tee /etc/systemd/system/hekate.service >/dev/null <<EOF
+    sudo tee /etc/systemd/system/CardFerry.service >/dev/null <<EOF
 [Unit]
-Description=Hekate SD card backup station
+Description=CardFerry SD card backup station
 After=multi-user.target
 
 [Service]
@@ -59,12 +61,12 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
     sudo systemctl daemon-reload
-    sudo systemctl enable hekate.service
+    sudo systemctl enable CardFerry.service
     echo "Autostart enabled."
 fi
 
 echo
 echo "Done. Please reboot now so that I2C and the group changes take effect:"
 echo "    sudo reboot"
-echo "Then edit src/users.json and start Hekate with:"
+echo "Then edit src/users.json and start CardFerry with:"
 echo "    $APP_DIR/venv/bin/python $APP_DIR/src/main.py"

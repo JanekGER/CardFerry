@@ -233,3 +233,6 @@ Ideas for the future: checksum verification before erasing, timestamped backup f
 ## License
 
 MIT, see [LICENSE](LICENSE).
+
+### Notes
+- The core application was written manually; the installer script was generated with AI assistance.
