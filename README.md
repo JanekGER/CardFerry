@@ -1,4 +1,4 @@
-# Hekate
+# CardFerry
 
 Raspberry Pi SD card backup station with LCD menu, buttons and status LEDs
 
@@ -24,14 +24,14 @@ CardFerry is a small standalone device built around a Raspberry Pi. Plug in a mi
 
 ## How it works
 
-1. Hekate starts, the **running LED** lights up and the LCD shows `insert SD-card`.
+1. CardFerry starts, the **running LED** lights up and the LCD shows `insert SD-card`.
 2. You insert a card. The **SD LED** lights up and the LCD shows `select user`.
 3. Choose a user with the **forward / back** buttons and press **confirm**.
 4. The card is copied to `/backup-data/<user>/`. When it is done, the **OK LED** lights up.
 5. The LCD asks `erase SD-card?` with `Yes` / `No`. `No` is preselected.
    - `No`: the card stays untouched.
    - `Yes`: release confirm, then press **confirm again within 3 seconds** to really erase. If you do not press again, you are taken back to the question.
-6. The LCD shows `take out SD-card`. Once the card is removed, all LEDs go off and Hekate is ready for the next card.
+6. The LCD shows `take out SD-card`. Once the card is removed, all LEDs go off and CardFerry is ready for the next card.
 
 If copying fails, the **error LED** lights up and the card is never erased.
 
@@ -145,7 +145,7 @@ On current Raspberry Pi OS versions, `pip install` outside a virtual environment
 
 **What is I2C?** I2C is a simple two-wire bus (one wire for data, `SDA`, one for the clock, `SCL`) that the Pi uses to talk to small devices. The LCD has an I2C backpack, so it needs only these two signal wires instead of about six.
 
-**Why is it needed?** I2C is switched off by default on Raspberry Pi OS. Without it the Pi cannot talk to the display and Hekate stops at start with an error such as `FileNotFoundError: /dev/i2c-1` or `OSError: [Errno 121] Remote I/O error`.
+**Why is it needed?** I2C is switched off by default on Raspberry Pi OS. Without it the Pi cannot talk to the display and CardFerry stops at start with an error such as `FileNotFoundError: /dev/i2c-1` or `OSError: [Errno 121] Remote I/O error`.
 
 **How to enable it**
 
@@ -198,16 +198,16 @@ Your files are in `/backup-data/<user>/`.
 
 ## Start automatically at boot
 
-The installer offers to set this up. To do it by hand, create `/etc/systemd/system/hekate.service` (adjust user and path):
+The installer offers to set this up. To do it by hand, create `/etc/systemd/system/CardFerry.service` (adjust user and path):
 
 ```ini
 [Unit]
-Description=Hekate SD card backup station
+Description=CardFerry SD card backup station
 After=multi-user.target
 
 [Service]
 User=pi
-ExecStart=/home/pi/hekate-main/venv/bin/python /home/pi/hekate-main/src/main.py
+ExecStart=/home/pi/CardFerry-main/venv/bin/python /home/pi/CardFerry-main/src/main.py
 Restart=on-failure
 RestartSec=5
 
@@ -219,7 +219,7 @@ Then:
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable --now hekate.service
+sudo systemctl enable --now CardFerry.service
 ```
 ## Known limitations
 
