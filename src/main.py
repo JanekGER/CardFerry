@@ -4,6 +4,7 @@ import time
 import os
 import shutil
 import json
+import getpass
 from pathlib import Path
 from RPLCD.i2c import CharLCD
 
@@ -23,7 +24,7 @@ current_choice = 0
 BUTTON_back = 6
 BUTTON_forward = 5
 BUTTON_confirm = 26
-username = os.getlogin()
+username = os.environ.get("SUDO_USER") or getpass.getuser()
 USERS_FILE = Path(__file__).parent / "users.json"
 choice = ["Yes", "No "]
 sd_path = f"/media/{username}"
